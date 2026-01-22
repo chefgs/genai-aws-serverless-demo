@@ -10,7 +10,8 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 BEDROCK_REGION = os.getenv("BEDROCK_REGION", "us-east-1")
-BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "anthropic.claude-3-haiku-20240307-v1:0")
+BEDROCK_MODEL_ID = os.getenv("BEDROCK_MODEL_ID", "amazon.nova-pro-v1:0")
+BEDROCK_MODEL_FALLBACK_ID = os.getenv("BEDROCK_MODEL_FALLBACK_ID", "anthropic.claude-3-haiku-20240307-v1:0")
 
 bedrock = boto3.client("bedrock-runtime", region_name=BEDROCK_REGION)
 
@@ -66,17 +67,27 @@ def call_bedrock_model(prompt: str) -> str:
         }
     )
 
-    try:
+    def _invoke(model_id: str) -> str:
         response = bedrock.invoke_model(
-            modelId=BEDROCK_MODEL_ID,
+            modelId=model_id,
             contentType="application/json",
             accept="application/json",
             body=body,
         )
         response_body = json.loads(response.get("body").read())
-        text = response_body["content"][0]["text"]
-        return text
+        return response_body["content"][0]["text"]
+
+    try:
+        return _invoke(BEDROCK_MODEL_ID)
     except ClientError as e:
+        if BEDROCK_MODEL_FALLBACK_ID and BEDROCK_MODEL_FALLBACK_ID != BEDROCK_MODEL_ID:
+            logger.warning(
+                "Primary model %s failed (%s); attempting fallback %s",
+                BEDROCK_MODEL_ID,
+                e,
+                BEDROCK_MODEL_FALLBACK_ID,
+            )
+            return _invoke(BEDROCK_MODEL_FALLBACK_ID)
         logger.error(f"Error invoking Bedrock model: {e}")
         raise
     except Exception as e:
@@ -171,4 +182,3 @@ def lambda_handler(event, context):
             "headers": {"Content-Type": "application/json"},
             "body": json.dumps({"error": "Internal server error"}),
         }
-

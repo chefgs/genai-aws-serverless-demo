@@ -12,3 +12,10 @@ Flow:
 
 See conversation text for detailed usage steps (Terraform deploy + Streamlit run).
 
+## Model selection
+
+- The Lambda uses environment variables to pick the Bedrock model and region:
+  - `BEDROCK_MODEL_ID` (default: `anthropic.claude-3-haiku-20240307-v1:0`)
+  - `BEDROCK_REGION` (default: `us-east-1`)
+- For production, you can point to a stronger reasoning model. Example:  
+  `BEDROCK_MODEL_ID=amazon.nova-pro-v1:0` (Nova 2). Keep the default as a lightweight fallback if the prod model is unavailable.
