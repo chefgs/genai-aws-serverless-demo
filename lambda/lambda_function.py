@@ -23,7 +23,7 @@ def build_prompt(payload: Dict[str, Any]) -> str:
     logs = payload.get("logs", "").strip()
 
     prompt = f"""You are a senior cloud and DevOps engineer.
-You help analyze issues in AWS-based systems (Lambda, API Gateway, Bedrock, etc.).
+You help analyze issues in AWS-based systems (EC2, S3, EKS, ECS, Lambda, API Gateway, Bedrock, etc.).
 
 Analyze the following situation and respond briefly but practically.
 
