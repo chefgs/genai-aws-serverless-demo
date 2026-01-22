@@ -24,7 +24,7 @@ See conversation text for detailed usage steps (Terraform deploy + Streamlit run
 
 - Install test deps (from repo root):  
   ```bash
-  python -m venv .venv && source .venv/bin/activate
+  python3 -m venv .venv && source .venv/bin/activate
   pip install boto3 botocore pytest
   ```
 - Lambda unit test with Bedrock stub (no AWS):  
@@ -37,7 +37,7 @@ See conversation text for detailed usage steps (Terraform deploy + Streamlit run
   ```
 - Mock backend for UI demo (no AWS):  
   ```bash
-  python frontend/mock_backend.py  # starts http://localhost:9000
+  python3 frontend/mock_backend.py  # starts http://localhost:9000
   # New shell:
   cd frontend && pip install -r requirements.txt
   INCIDENT_HELPER_API_URL=http://localhost:9000 streamlit run streamlit_app.py

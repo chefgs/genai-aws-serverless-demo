@@ -23,7 +23,7 @@ if not API_URL:
     )
     st.stop()
 
-with st.expander("🔧 Backend configuration (for you, not students)", expanded=False):
+with st.expander("🔧 Backend configuration", expanded=False):
     st.write("Current backend URL:")
     st.code(API_URL, language="bash")
 
