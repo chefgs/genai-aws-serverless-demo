@@ -13,7 +13,7 @@ module "lambda_backend" {
   source = "./modules/lambda_backend"
 
   function_name = "${var.project_name}-backend"
-  runtime       = "python3.11"
+  runtime       = "python3.9"
   handler       = "lambda_function.lambda_handler"
 
   memory_size = 512

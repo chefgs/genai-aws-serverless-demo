@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region to deploy into"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-1"
 }
 
 variable "project_name" {
@@ -13,12 +13,12 @@ variable "project_name" {
 variable "bedrock_region" {
   description = "Region where Amazon Bedrock is available"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-1"
 }
 
 variable "bedrock_model_id" {
   description = "Amazon Bedrock model ID to use"
   type        = string
-  default     = "anthropic.claude-3-haiku-20240307-v1:0"
+  default     = "amazon.nova-2-sonic-v1:0"
 }
 
