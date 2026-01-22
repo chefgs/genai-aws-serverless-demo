@@ -93,6 +93,18 @@ ipython_config.py
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
 #Pipfile.lock
+*.tfstate
+*.tfstate.backup
+.terraform/
+terraform.tfvars
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+terraform.rc
+terraform.d/
 
 # UV
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
